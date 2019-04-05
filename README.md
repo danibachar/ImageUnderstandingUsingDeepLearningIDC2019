@@ -18,7 +18,7 @@ This is a repository that follow an IDC course H.W in Deep Learning
 
 ## Numpy Helper
 
-`
+```
 a = np.array([[1,2],[3,4]])
 b = np.array([[11,12],[13,14]])
 np.dot(a,b)
@@ -28,4 +28,4 @@ Will Produce:
 
 Calc:
 [[1*11+2*13, 1*12+2*14],[3*11+4*13, 3*12+4*14]]
-`
+```
