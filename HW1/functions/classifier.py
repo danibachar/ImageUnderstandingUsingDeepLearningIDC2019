@@ -43,18 +43,11 @@ class LinearClassifier(object):
         Returns:
         - accuracy as a single float
         """
-
-        accuracy = 0.0
-        ###########################################################################
-        # TODO:                                                                   #
-        # Implement this method.                                                  #
-        ###########################################################################
-
-        ###########################################################################
-        #                           END OF YOUR CODE                              #
-        ###########################################################################
-
-        return accuracy
+        y_pred = self.predict(X)
+        if len(y_pred) != len(y):
+            raise Exception('Fatal Error in dim - please checkout your prediction code!')
+        accuracy = np.sum(y_pred == y)/len(y)
+        return accuracy*100
 
 
 
@@ -119,7 +112,7 @@ class LinearPerceptron(LinearClassifier):
 
     def predict(self, X):
         sum_vec = np.dot(X, self.W[1:]) + self.W[0]
-        y_pred = np.where(sum_vec > 0.0, 1, -1)
+        y_pred = np.where(sum_vec > 0.0, 1, 0)
         return y_pred
 
 
