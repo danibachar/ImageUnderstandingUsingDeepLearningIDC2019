@@ -102,3 +102,14 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# Folders
+.idea/*
+.idea/
+./.idea/*
+/.idea/
+
+# Zip Files Exclusion
+*.zip
+*.tar
+*.gz
