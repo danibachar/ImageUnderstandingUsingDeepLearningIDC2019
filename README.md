@@ -3,9 +3,11 @@ This is a repository that follow an IDC course H.W in Deep Learning
 
 
 # Resources I got help from (:
-[1](https://github.com/eriklindernoren/ML-From-Scratch)
-[2](https://gist.github.com/Thomascountz/77670d1fd621364bc41a7094563a7b9c)
-[3](https://machinelearningmastery.com/implement-perceptron-algorithm-scratch-python/)
+[1 - repo](https://github.com/eriklindernoren/ML-From-Scratch)
+
+[2 - repo](https://gist.github.com/Thomascountz/77670d1fd621364bc41a7094563a7b9c)
+
+[3 - repo](https://machinelearningmastery.com/implement-perceptron-algorithm-scratch-python/)
 
 ## Short Articles and Explanation
 [perceptron explanation](https://machinelearningmastery.com/implement-perceptron-algorithm-scratch-python/)
