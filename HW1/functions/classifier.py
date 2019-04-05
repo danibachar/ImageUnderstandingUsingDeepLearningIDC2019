@@ -49,7 +49,7 @@ class LinearClassifier(object):
         # TODO:                                                                   #
         # Implement this method.                                                  #
         ###########################################################################
-        pass
+
         ###########################################################################
         #                           END OF YOUR CODE                              #
         ###########################################################################
@@ -119,7 +119,7 @@ class LinearPerceptron(LinearClassifier):
 
     def predict(self, X):
         sum_vec = np.dot(X, self.W[1:]) + self.W[0]
-        y_pred = np.where(sum_vec > 0.0, 1, 0)
+        y_pred = np.where(sum_vec > 0.0, 1, -1)
         return y_pred
 
 
