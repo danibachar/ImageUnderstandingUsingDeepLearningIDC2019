@@ -43,11 +43,21 @@ class LinearClassifier(object):
         Returns:
         - accuracy as a single float
         """
+        accuracy = 0.0
+        ###########################################################################
+        # TODO:                                                                   #
+        # Implement this method.                                                  #
+        ###########################################################################
+
         y_pred = self.predict(X)
         if len(y_pred) != len(y):
             raise Exception('Fatal Error in dim - please checkout your prediction code!')
-        accuracy = np.sum(y_pred == y)/len(y)
-        return accuracy*100
+        accuracy = np.sum(y_pred == y)/len(y)*100
+        ###########################################################################
+        #                           END OF YOUR CODE                              #
+        ###########################################################################
+
+        return accuracy
 
 
 
@@ -68,13 +78,25 @@ class LinearClassifier(object):
         # the learning rate. Use the loss_history array to save the loss on     #
         # iteration to visualize the loss.                                      #
         #########################################################################
+        num_train, dim = X.shape
+        # num_classes = np.max(y) + 1  # assume y takes values 0...K-1 where K is number of classes
+        # if self.W is None:
+        #     # lazily initialize W
+        #     self.W = 0.001 * np.random.randn(dim, num_classes)
+
         loss_history = []
-        loss = 0.0
         for i in range(num_iters):
             ###########################################################################
             #                          START OF YOUR CODE                             #
             ###########################################################################
-            pass
+            batch_ind = np.random.choice(num_train, batch_size)
+            X_batch = X[batch_ind]
+            y_batch = y[batch_ind]
+
+            loss, grad = self.loss(X_batch, y_batch)
+            loss_history.append(loss)
+            # Update the weights
+            self.W += - learning_rate * grad
             ###########################################################################
             #                           END OF YOUR CODE                              #
             ###########################################################################
@@ -105,14 +127,31 @@ class LinearPerceptron(LinearClassifier):
     # Classifier that uses Perceptron loss
 
     def __init__(self, X, y):
-        self.W = np.zeros(1 + X.shape[1])
+        self.W = None
+        ###########################################################################
+        # TODO:                                                                   #
+        # Initiate the parameters of your model.                                  #
+        ###########################################################################
+        sample_count = 2
+        self.W = np.random.randn(X.shape[1], sample_count) * 0.0001
         self.X = X
         self.y = y
+        ###########################################################################
+        #                           END OF YOUR CODE                              #
+        ###########################################################################
 
 
     def predict(self, X):
-        sum_vec = np.dot(X, self.W[1:]) + self.W[0]
-        y_pred = np.where(sum_vec > 0.0, 1, 0)
+        y_pred = None
+        ###########################################################################
+        # TODO:                                                                   #
+        # Implement this method.                                                  #
+        ###########################################################################
+        scores = X.dot(self.W)
+        y_pred = np.argmax(scores, axis=1)
+        ###########################################################################
+        #                           END OF YOUR CODE                              #
+        ###########################################################################
         return y_pred
 
 
