@@ -90,6 +90,9 @@ class LinearClassifier(object):
             y_batch = y[batch_ind]
 
             loss, grad = self.loss(X_batch, y_batch)
+            # print('loss = {}'.format(loss))
+            # print('grad shape = {}'.format(grad.shape))
+            # print('W shape = {}'.format(self.W.shape))
             loss_history.append(loss)
             # Update the weights
             self.W += - learning_rate * grad
@@ -142,7 +145,9 @@ class LinearPerceptron(LinearClassifier):
         # TODO:                                                                   #
         # Implement this method.                                                  #
         ###########################################################################
+        # Predict according to weights
         scores = X.dot(self.W)
+        # Activations
         y_pred = np.argmax(scores, axis=1)
         ###########################################################################
         #                           END OF YOUR CODE                              #
@@ -163,7 +168,10 @@ class LogisticRegression(LinearClassifier):
         # TODO:                                                                   #
         # Initiate the parameters of your model.                                  #
         ###########################################################################
-        pass
+        num_of_classes = np.max(y)
+        # print('classes count = ', num_of_classes)
+        dim = X.shape[1]
+        self.W = np.random.randn(dim, num_of_classes) * 0.0001
         ###########################################################################
         #                           END OF YOUR CODE                              #
         ###########################################################################
@@ -175,7 +183,17 @@ class LogisticRegression(LinearClassifier):
         # TODO:                                                                   #
         # Implement this method.                                                  #
         ###########################################################################
-        pass
+        # Predict according to weights
+        scores = X.dot(self.W)
+        # Activation
+        prob = sigmoid(scores)
+        y_where = np.argmax(prob, axis=1)
+        #np.where(prob > 0.5, 1, 0).flatten()
+        #
+        y_pred = y_where
+        # print(y_pred.shape)
+        # print(np.where(prob > 0.5, 1, 0).shape)
+        # print(np.argmax(prob, axis=1).shape)
         ###########################################################################
         #                           END OF YOUR CODE                              #
         ###########################################################################
