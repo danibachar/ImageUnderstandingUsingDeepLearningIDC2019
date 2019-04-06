@@ -79,17 +79,13 @@ class LinearClassifier(object):
         # iteration to visualize the loss.                                      #
         #########################################################################
         num_train, dim = X.shape
-        # num_classes = np.max(y) + 1  # assume y takes values 0...K-1 where K is number of classes
-        # if self.W is None:
-        #     # lazily initialize W
-        #     self.W = 0.001 * np.random.randn(dim, num_classes)
 
         loss_history = []
         for i in range(num_iters):
             ###########################################################################
             #                          START OF YOUR CODE                             #
             ###########################################################################
-            batch_ind = np.random.choice(num_train, batch_size)
+            batch_ind = np.random.choice(num_train, batch_size,replace = True)
             X_batch = X[batch_ind]
             y_batch = y[batch_ind]
 
@@ -132,10 +128,9 @@ class LinearPerceptron(LinearClassifier):
         # TODO:                                                                   #
         # Initiate the parameters of your model.                                  #
         ###########################################################################
-        sample_count = 2
-        self.W = np.random.randn(X.shape[1], sample_count) * 0.0001
-        self.X = X
-        self.y = y
+        num_of_classes = np.max(y) + 1
+        dim = X.shape[1]
+        self.W = np.random.randn(dim, num_of_classes) * 0.0001
         ###########################################################################
         #                           END OF YOUR CODE                              #
         ###########################################################################

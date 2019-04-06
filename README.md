@@ -16,6 +16,10 @@ This is a repository that follow an IDC course H.W in Deep Learning
 ## Course Criclulim
 [CS231n solutions](https://github.com/MahanFathi/CS231/blob/master/assignment1/cs231n/classifiers/linear_svm.py)
 
+## Understanding Epochs/Batch Size/ Iterations
+[1](https://towardsdatascience.com/epoch-vs-iterations-vs-batch-size-4dfb9c7ce9c9)
+[2](https://machinelearningmastery.com/difference-between-a-batch-and-an-epoch/)
+
 # HW Examples from online
 [1](https://github.com/MahanFathi/CS231)
 [2](https://github.com/Twice22/CS231n-solutions)
@@ -26,6 +30,8 @@ This is a repository that follow an IDC course H.W in Deep Learning
 [6](https://github.com/Gmoog/Svm)
 
 [7](https://github.com/dianachenyu/linear-svm-squared-hinge-loss)
+
+
 
 
 # Numpy Helper

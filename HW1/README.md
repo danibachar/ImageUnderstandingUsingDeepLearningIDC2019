@@ -7,3 +7,7 @@
 [perceptron - explanation](https://machinelearningmastery.com/implement-perceptron-algorithm-scratch-python/)
 [perceptron - implementation](https://machinelearningmastery.com/implement-perceptron-algorithm-scratch-python/)
 [perceptron](https://jtsulliv.github.io/perceptron/)
+
+
+## Understaing of loss functions
+[crossEntropy/softmax/logistic](https://gombru.github.io/2018/05/23/cross_entropy_loss/)
