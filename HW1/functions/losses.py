@@ -73,26 +73,21 @@ def perceptron_loss_vectorized(W, X, y):
   #############################################################################
   scores = X.dot(W)
   example_count = X.shape[0]
-  # print(example_count)
-  # print(y.shape)
+
   correct_score = scores[list(range(example_count)),y]
-  # print(correct_score)
   correct_score = correct_score.reshape(example_count, -1)
-  # print(correct_score.shape)
   scores += 1 - correct_score
-  # print(y.shape)
-  # print(X.shape)
-  # print(W.shape)
-  # print(scores.shape)
-  # make sure correct scores themselves don't contribute to loss function
+
+
   scores[list(range(example_count)), y] = 0
-  # construct loss function - according to the perceptron loss presented in class
+
   loss = np.sum(np.fmax(scores, 0)) / example_count
-  # TODO - understand masking
-  X_mask = np.zeros(scores.shape)
-  X_mask[scores > 0] = 1
-  X_mask[np.arange(example_count), y] = -np.sum(X_mask, axis=1)
-  dW = X.T.dot(X_mask)
+
+  # Masking into right dim
+  mask = np.zeros(scores.shape)
+  mask[scores > 0] = 1
+  mask[np.arange(example_count), y] = -np.sum(mask, axis=1)
+  dW = X.T.dot(mask)
   dW /= example_count
 
   #############################################################################

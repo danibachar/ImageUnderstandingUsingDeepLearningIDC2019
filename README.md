@@ -9,6 +9,7 @@ This is a repository that follow an IDC course H.W in Deep Learning
 
 ## Andrew Ng - Stanford CS229
 [Stanford CS229](https://www.youtube.com/watch?v=UzxYlbK2c7E&list=PLA89DCFA6ADACE599&index=2&t=0s)
+[Stanford CS229](http://cs229.stanford.edu/projects.html)
 
 ## Convolutional Neural Networks for Visual Recognition
 [Stanford CS231n](http://cs231n.github.io/)

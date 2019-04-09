@@ -131,9 +131,8 @@ class LinearPerceptron(LinearClassifier):
         # TODO:                                                                   #
         # Initiate the parameters of your model.                                  #
         ###########################################################################
-        num_of_classes = np.max(y) + 1
-        dim = X.shape[1]
-        self.W = np.random.randn(dim, num_of_classes) * 0.0001
+        num_of_features = X.shape[1]
+        self.W = np.random.randn(num_of_features, 2) * 0.0001
         ###########################################################################
         #                           END OF YOUR CODE                              #
         ###########################################################################
@@ -168,10 +167,8 @@ class LogisticRegression(LinearClassifier):
         # TODO:                                                                   #
         # Initiate the parameters of your model.                                  #
         ###########################################################################
-        num_of_classes = np.max(y)
-        # print('classes count = ', num_of_classes)
-        dim = X.shape[1]
-        self.W = np.random.randn(dim, num_of_classes) * 0.0001
+        num_of_features = X.shape[1]
+        self.W = np.random.randn(num_of_features, 1) * 0.0001
         ###########################################################################
         #                           END OF YOUR CODE                              #
         ###########################################################################
