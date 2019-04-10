@@ -187,47 +187,6 @@ def binary_cross_entropy(W, X, y):
   return loss, dW
 
 
-### BONOUS QUESTION
-def l2_loss_vectorized(W, X, y, reg):
-  """
-  Vectorized version of perceptron_loss_naive. instead of loops, should use 
-  numpy vectorization.
-
-  Inputs and outputs are the same as perceptron_loss_naive.
-  """
-  loss = 0.0
-  dW = np.zeros(W.shape) # initialize the gradient as zero
-  #############################################################################
-  # TODO:                                                                     #
-  # Implement a vectorized version of the perceptron loss, storing the       #
-  # result in loss and the gradient in dW                                     #
-  #############################################################################
-  scores = X.dot(W)
-  example_count = X.shape[0]
-
-  correct_score = scores[list(range(example_count)),y]
-  correct_score = correct_score.reshape(example_count, -1)
-  scores += 1 - correct_score
-
-
-  scores[list(range(example_count)), y] = 0
-
-  loss = np.sum(np.fmax(scores, 0)) / example_count
-
-  # Masking into right dim
-  mask = np.zeros(scores.shape)
-  mask[scores > 0] = 1
-  mask[np.arange(example_count), y] = -np.sum(mask, axis=1)
-  dW = X.T.dot(mask)
-  dW /= example_count
-
-  #############################################################################
-  #                             END OF YOUR CODE                              #
-  #############################################################################
-
-  return loss, dW
-
-
 def grad_check(f, x, analytic_grad, num_checks=10, h=1e-5):
 
   for i in range(num_checks):

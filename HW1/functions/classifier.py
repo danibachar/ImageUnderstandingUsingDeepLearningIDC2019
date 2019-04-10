@@ -173,7 +173,6 @@ class LogisticRegression(LinearClassifier):
         #                           END OF YOUR CODE                              #
         ###########################################################################
 
-
     def predict(self, X):
         y_pred = None
         ###########################################################################
@@ -195,43 +194,6 @@ class LogisticRegression(LinearClassifier):
     def loss(self, X_batch, y_batch):
         return binary_cross_entropy(self.W, X_batch, y_batch)
 
-
-class L2Regression(LinearClassifier):
-    # Classifer that uses sigmoid and binary cross entropy loss
-
-    def __init__(self, X, y):
-        self.W = None
-        ###########################################################################
-        # TODO:                                                                   #
-        # Initiate the parameters of your model.                                  #
-        ###########################################################################
-        num_of_features = X.shape[1]
-        self.W = np.random.randn(num_of_features, 1) * 0.0001
-        ###########################################################################
-        #                           END OF YOUR CODE                              #
-        ###########################################################################
-
-
-    def predict(self, X):
-        y_pred = None
-        ###########################################################################
-        # TODO:                                                                   #
-        # Implement this method.                                                  #
-        ###########################################################################
-        # Predict according to weights
-        scores = X.dot(self.W)
-        # Activation
-        y_pred = np.round(
-            sigmoid(scores).reshape((scores.shape[0],))
-        ).astype(int)
-        ###########################################################################
-        #                           END OF YOUR CODE                              #
-        ###########################################################################
-        return y_pred
-
-
-    def loss(self, X_batch, y_batch):
-        return l2_loss_vectorized(self.W, X_batch, y_batch, 5e-4)
 
 
 
