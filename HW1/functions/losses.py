@@ -1,5 +1,6 @@
 import numpy as np
 from random import randrange
+import math
 
 def perceptron_loss_naive(W, X, y):
 
@@ -114,17 +115,34 @@ def sigmoid(x):
 
   return x
 
-def sigmoid_derivative(x):
-    return sigmoid(x)*(1-sigmoid(x))
 
-def nn(x, w):
-    return sigmoid(x.dot(w.T))
+# sum help from sklean for overflow handling! I know how to implement log of sigmoind function!
+def _inner_log_logistic_sigmoid(x):
+    """Log of the logistic sigmoid function log(1 / (1 + e ** -x))"""
+    if x > 0:
+        return -math.log(1. + math.exp(-x))
+    else:
+        return x - math.log(1. + math.exp(x))
 
-def binary_cross_entropy_derivative(yHat, y):
-    a = np.divide(y,yHat)
-    b = np.divide((1-y),(1-yHat))
-    return -a+b
+def _log_logistic_sigmoid(X, out):
+    n_samples, n_features = X.shape
+    for i in range(n_samples):
+        for j in range(n_features):
+            out[i, j] = _inner_log_logistic_sigmoid(X[i, j])
+    return out
 
+def log_logistic(X, out=None):
+    is_1d = X.ndim == 1
+    X = np.atleast_2d(X)
+
+    if out is None:
+        out = np.empty_like(X)
+
+    _log_logistic_sigmoid(X, out)
+
+    if is_1d:
+        return np.squeeze(out)
+    return out
 
 def binary_cross_entropy(W, X, y):
   """
@@ -140,6 +158,9 @@ def binary_cross_entropy(W, X, y):
   """
   loss = 0.0
   dW = np.zeros(W.shape) # initialize the gradient as zero
+  n_samples, n_features = X.shape
+  classes_count = W.shape[1]  # col count = classes count
+  # print('classes_count - {}'.format(classes_count))
   #############################################################################
   # TODO:                                                                     #
   # Implement the function and store result in loss and the gradint in dW     #
@@ -147,98 +168,58 @@ def binary_cross_entropy(W, X, y):
   # and the sigmoid function generally outputs values in the range (0,1).     #
   # Make the proper adjustments for your code to work.                        #
   #############################################################################
-  classes_count = W.shape[1]  # col count = classes count
-  example_count = X.shape[0]  # row count = number of samples
+  w = W.flatten()
+  z = np.dot(X, w)
+  yz = y * z
+  # Loss
+  loss = -np.sum(log_logistic(yz))
+  # Gradient
+  z = sigmoid(yz)
+  z0 = (z-1) * y
+  grad = np.empty_like(w)
+  grad[:n_features] = X.T.dot(z0)
+  dW = grad.reshape(n_features, classes_count)
 
-  # Predict step
+  #############################################################################
+  #                             END OF YOUR CODE                              #
+  #############################################################################
+
+  return loss, dW
+
+
+### BONOUS QUESTION
+def l2_loss_vectorized(W, X, y, reg):
+  """
+  Vectorized version of perceptron_loss_naive. instead of loops, should use 
+  numpy vectorization.
+
+  Inputs and outputs are the same as perceptron_loss_naive.
+  """
+  loss = 0.0
+  dW = np.zeros(W.shape) # initialize the gradient as zero
+  #############################################################################
+  # TODO:                                                                     #
+  # Implement a vectorized version of the perceptron loss, storing the       #
+  # result in loss and the gradient in dW                                     #
+  #############################################################################
   scores = X.dot(W)
-  predictions = sigmoid(scores)
-  # print(X.shape)
-  # print(X.T.shape)
-  #
-  # print(W.shape)
-  # print(W.T.shape)
-  #
-  # print(y.shape)
-  # print(y.T.shape)
-  #
-  # print(scores.shape)
-  # print(scores.T.shape)
-  #
-  # print(predictions.shape)
-  # print(predictions.T.shape)
-  # loss
-  first = y * np.log(predictions)
-  # print(first.shape)
-  second = (1 - y) * np.log(1 - predictions)
-  # print(second.shape)
-  loss = -np.mean(first+second)
+  example_count = X.shape[0]
 
-  # grad claculation
+  correct_score = scores[list(range(example_count)),y]
+  correct_score = correct_score.reshape(example_count, -1)
+  scores += 1 - correct_score
 
 
-  # Test 1
-  # p_dr = sigmoid_derivative(scores)
-  # print(p_dr.shape)
-  # print(p_dr.T.dot(X).T.shape)
-  # dW = p_dr.T.dot(X).T/example_count
+  scores[list(range(example_count)), y] = 0
 
-  # Test 2
-  dirv = binary_cross_entropy_derivative(predictions, y)
-  print(dirv.shape)
-  dirvT = dirv.T.dot(X)
-  print(dirvT.shape)
-  # a = np.divide(y,p_dr)
-  # b = np.divide((1-y), (1-p_dr))
-  # t = -a+b
-  # print(t.shape)
-  # print(t.dot(X).shape)
-  # print(X.T.dot(t).shape)
-  # dW = X.T.dot(t)
+  loss = np.sum(np.fmax(scores, 0)) / example_count
 
-  # Test 3
-  # diff = predictions - y
-  # print(diff.shape)
-  # res = diff.dot(X)
-  # dW = res.T/example_count
-  # print(dW.shape)
-
-
-  # print(predictions.shape)
-  # pp = scores[list(range(example_count)), y]
-  # loss = - np.sum(
-  #     y * -np.log(predictions),
-  #     (1 - y) * -np.log(1 - predictions)
-  # )
-  # print('loss = {}'.format(loss))
-  # loss = np.sum(binary_crossentropy(y, scores))
-  # print(scores.shape)
-  # print(predictions.shape)
-  # print(loss)
-  # loss /= example_count
-
-  # scores -= np.max(scores, axis=1, keepdims=True)
-  # scores[list(range(example_count)), y] = 0
-  # crack = scores[range(example_count), y]
-  # print(crack.shape)
-
-  #??????
-  # X_mask = np.zeros(predictions.shape)
-  # X_mask[scores > 0] = 1
-  # print(X_mask.shape)
-  # print(y.shape)
-  # for i in range(X_mask.shape[0]): # For each sample
-  #     l1 = np.arange(example_count).shape
-  #     l2 = y.shape
-  #     print(l1)
-  #     print(l2)
-
-  # print(X_mask[np.arange(example_count), y])
-  # X_mask[np.arange(example_count), y] = -np.sum(X_mask, axis=1)
-  # dW = X.T.dot(X_mask)
-  # dW /= example_count
-
-  # dW = -np.mean((1-predictions)*y*X.T, axis=1)
+  # Masking into right dim
+  mask = np.zeros(scores.shape)
+  mask[scores > 0] = 1
+  mask[np.arange(example_count), y] = -np.sum(mask, axis=1)
+  dW = X.T.dot(mask)
+  dW /= example_count
 
   #############################################################################
   #                             END OF YOUR CODE                              #
