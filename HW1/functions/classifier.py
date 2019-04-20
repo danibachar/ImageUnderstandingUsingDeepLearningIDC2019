@@ -90,9 +90,9 @@ class LinearClassifier(object):
             y_batch = y[batch_ind]
 
             loss, grad = self.loss(X_batch, y_batch)
-            # print('loss = {}'.format(loss))
-            # print('grad shape = {}'.format(grad.shape))
-            # print('W shape = {}'.format(self.W.shape))
+            print('loss = {}'.format(loss))
+            print('grad shape = {}'.format(grad.shape))
+            print('W shape = {}'.format(self.W.shape))
             loss_history.append(loss)
             # Update the weights
             self.W += - learning_rate * grad
@@ -173,6 +173,7 @@ class LogisticRegression(LinearClassifier):
         #                           END OF YOUR CODE                              #
         ###########################################################################
 
+
     def predict(self, X):
         y_pred = None
         ###########################################################################
@@ -194,6 +195,100 @@ class LogisticRegression(LinearClassifier):
     def loss(self, X_batch, y_batch):
         return binary_cross_entropy(self.W, X_batch, y_batch)
 
+
+
+
+class L2Regression(LinearClassifier):
+    # Classifer that uses sigmoid and binary cross entropy loss
+
+    def __init__(self, X, y):
+        self.W = None
+        ###########################################################################
+        # TODO:                                                                   #
+        # Initiate the parameters of your model.                                  #
+        ###########################################################################
+        num_of_features = X.shape[1]
+        self.W = np.random.randn(num_of_features, 1) * 0.0001
+        ###########################################################################
+        #                           END OF YOUR CODE                              #
+        ###########################################################################
+
+
+    def predict(self, X):
+        y_pred = None
+        ###########################################################################
+        # TODO:                                                                   #
+        # Implement this method.                                                  #
+        ###########################################################################
+        # Predict according to weights
+        scores = X.dot(self.W)
+        # Activations
+        y_pred = np.argmax(scores, axis=1)
+        ###########################################################################
+        #                           END OF YOUR CODE                              #
+        ###########################################################################
+        return y_pred
+
+    ### BONOUS QUESTION
+    def l2_loss_vectorized(self, W, X, y, reg):
+        """
+        Vectorized version of perceptron_loss_naive. instead of loops, should use 
+        numpy vectorization.
+  
+        Inputs and outputs are the same as perceptron_loss_naive.
+        """
+        loss = 0.0
+        dW = np.zeros(W.shape)  # initialize the gradient as zero
+        num_train = X.shape[0]
+        num_of_classes = W.shape[1]
+        #############################################################################
+        # TODO:                                                                     #
+        # Implement a vectorized version of the perceptron loss, storing the       #
+        # result in loss and the gradient in dW                                     #
+        #############################################################################
+
+
+        scores = X.dot(W) - y
+        # print('y.shape = {}'.format(y.shape))
+        # print('W.shape = {}'.format(W.shape))
+        # print('X.shape = {}'.format(X.shape))
+        # print('scores.shape = {}'.format(scores.shape))
+
+        loss = np.mean(0.5 * (scores**2))
+        # loss += 1 / 2 * reg * np.sum(W * W)
+        print('loss = {}'.format(loss))
+        grad = np.empty_like(W)
+        grad = X.T.dot(scores)
+        dW = grad
+        dW /= num_train
+        # dW += reg * W
+        print('grad.shape = {}'.format(dW.shape))
+        # correct_class_score = scores[list(range(num_train)), f_y]
+        # margins = np.maximum(0, scores - correct_class_score[:, np.newaxis] + 1)
+        # margins[np.arange(num_train), y] = 0
+        # loss = np.sum(margins)
+        # loss += 1 / 2 * reg * np.sum(W * W)
+        #
+        # # don't forget to take the mean
+        # loss /= num_train
+        #
+        # mask = np.zeros(margins.shape)
+        # mask[margins > 0] = 1
+        # np_sup_zero = np.sum(mask, axis=1)
+        # mask[np.arange(num_train), y] = -np_sup_zero
+        # dW = X.T.dot(mask)
+        #
+        # dW /= num_train
+        # dW += reg * W
+
+        #############################################################################
+        #                             END OF YOUR CODE                              #
+        #############################################################################
+
+        return loss, dW
+
+    def loss(self, X_batch, y_batch):
+        return self.l2_loss_vectorized(self.W, X_batch, y_batch, 5e-4)
 
 
 

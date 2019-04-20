@@ -116,7 +116,7 @@ def sigmoid(x):
   return x
 
 
-# sum help from sklean for overflow handling! I know how to implement log of sigmoind function!
+# sum help from sklearn for overflow handling! I know how to implement log of sigmoind function!
 def _inner_log_logistic_sigmoid(x):
     """Log of the logistic sigmoid function log(1 / (1 + e ** -x))"""
     if x > 0:
