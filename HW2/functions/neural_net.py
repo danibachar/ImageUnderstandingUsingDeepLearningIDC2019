@@ -73,14 +73,14 @@ class ThreeLayerNet(object):
     W2, b2 = self.params['W2'], self.params['b2']
     W3, b3 = self.params['W3'], self.params['b3']
     N, D = X.shape
-    print('W1.shape = {}'.format(W1.shape))
-    print('b1.shape = {}'.format(b1.shape))
-    print('W2.shape = {}'.format(W2.shape))
-    print('b2.shape = {}'.format(b2.shape))
-    print('W3.shape = {}'.format(W3.shape))
-    print('b3.shape = {}'.format(b3.shape))
-    print('x.shape = {}'.format(X.shape))
-    print('#####################')
+    # print('W1.shape = {}'.format(W1.shape))
+    # print('b1.shape = {}'.format(b1.shape))
+    # print('W2.shape = {}'.format(W2.shape))
+    # print('b2.shape = {}'.format(b2.shape))
+    # print('W3.shape = {}'.format(W3.shape))
+    # print('b3.shape = {}'.format(b3.shape))
+    # print('x.shape = {}'.format(X.shape))
+    # print('#####################')
     # Compute the forward pass
     scores = None
     #############################################################################
@@ -321,13 +321,14 @@ class ThreeLayerNet(object):
     ###########################################################################
     # TODO: Implement this function                                           #
     ###########################################################################
-    max_1 = np.maximum(0, X.dot(self.params['W1']) + self.params['b1'])
-    p_1 = np.dot(max_1, self.params['W2'])
+    pred_1 = np.maximum(0, X.dot(self.params['W1']) + self.params['b1'])
+    pred_2 = np.maximum(0, pred_1.dot(self.params['W2']) + self.params['b2'])
+    pred_3 = np.dot(pred_2, self.params['W3']) + self.params['b3']
 
-    max_2 = np.maximum(0, p_1.dot(self.params['W2']) + self.params['b2'])
-    p_2 = np.dot(max_2, self.params['W3'])
+    p = np.exp(pred_3 - np.max(pred_3, axis=1, keepdims=True))
+    p = p / np.sum(p, axis=1, keepdims=True)
 
-    y_pred = np.argmax(p_2 + self.params['b3'], axis=1)
+    y_pred = np.asarray(np.argmax(p, axis=1)).reshape(-1)
     ###########################################################################
     #                              END OF YOUR CODE                           #
     ###########################################################################
