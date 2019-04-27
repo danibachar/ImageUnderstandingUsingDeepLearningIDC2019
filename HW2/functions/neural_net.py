@@ -36,9 +36,6 @@ class ThreeLayerNet(object):
     - output_size: The number of classes C.
     """
     self.params = {}
-    print('input_size = {}'.format(input_size))
-    print('hidden_size = {}'.format(hidden_size))
-    print('output_size = {}'.format(output_size))
     self.params['W1'] = std * np.random.randn(input_size, hidden_size)
     self.params['b1'] = np.zeros(hidden_size)
     self.params['W2'] = std * np.random.randn(hidden_size, hidden_size)
@@ -92,7 +89,7 @@ class ThreeLayerNet(object):
     # Test with function
     out_1, cache_1 = fc_relu_forward(X, W1, b1)
     (X, W1, b1), relu_cache_1 = cache_1
-    print('out_1.shape = {}'.format(out_1.shape))
+    # print('out_1.shape = {}'.format(out_1.shape))
 
     # Kind of working
     # f = np.dot(X, W1) + b1 #
@@ -107,7 +104,7 @@ class ThreeLayerNet(object):
     # Test with function
     out_2, cache_2 = fc_relu_forward(out_1, W2, b2)
     (out_1, W2, b2), relu_cache_2 = cache_2
-    print('out_2.shape = {}'.format(out_2.shape))
+    # print('out_2.shape = {}'.format(out_2.shape))
 
     # Kind of working
     # 2) fc layer 2 - ReLU
@@ -175,21 +172,21 @@ class ThreeLayerNet(object):
     # Test
 
     dx3, dW3, db3 = fc_backward(s, cache_3)
-    print('dx3.shape = {}'.format(dx3.shape))
+    # print('dx3.shape = {}'.format(dx3.shape))
 
     dx2, dW2, db2 = fc_relu_backward(dx3, cache_2)
-    print('dx2.shape = {}'.format(dx2.shape))
+    # print('dx2.shape = {}'.format(dx2.shape))
 
     dx1, dW1, db1 = fc_relu_backward(dx2, cache_1)
-    print('dx1.shape = {}'.format(dx1.shape))
-    print('#####################')
+    # print('dx1.shape = {}'.format(dx1.shape))
+    # print('#####################')
 
 
     # 1)
     # dW3 = H1.T.dot(s)
-    print('dW3.shape = {}'.format(dW3.shape))
+    # print('dW3.shape = {}'.format(dW3.shape))
     # db3 = np.sum(s, axis=0)
-    print('db3.shape = {}'.format(db3.shape))
+    # print('db3.shape = {}'.format(db3.shape))
 
     # hidden_1 = s.dot(W3.T)
     # print('hidden_1.shape 1 = {}'.format(hidden_1.shape))
@@ -197,9 +194,9 @@ class ThreeLayerNet(object):
     # print('hidden_1.shape 2 = {}'.format(hidden_1.shape))
 
     # dW2 = H2.T.dot(hidden_1)
-    print('dW2.shape = {}'.format(dW2.shape))
+    # print('dW2.shape = {}'.format(dW2.shape))
     # db2 = np.sum(hidden_1, axis=0)
-    print('db2.shape = {}'.format(db2.shape))
+    # print('db2.shape = {}'.format(db2.shape))
 
     # hidden_2 = hidden_1.dot(W2.T)
     # print('hidden_2.shape 1 = {}'.format(hidden_2.shape))
@@ -207,9 +204,9 @@ class ThreeLayerNet(object):
     # print('hidden_2.shape 2 = {}'.format(hidden_2.shape))
 
     # dW1 = X.T.dot(hidden_2)
-    print('dW1.shape = {}'.format(dW1.shape))
+    # print('dW1.shape = {}'.format(dW1.shape))
     # db1 = np.sum(hidden_2, axis=0)
-    print('db1.shape = {}'.format(db1.shape))
+    # print('db1.shape = {}'.format(db1.shape))
     # print('#####################')
 
     grads['W3'] = dW3 + 2 * reg * W3
