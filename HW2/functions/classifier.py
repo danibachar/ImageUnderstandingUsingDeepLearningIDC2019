@@ -11,9 +11,9 @@ class LogisticRegression():
 
     def predict(self, X):
         """
-        Use the weight of the classifier to predict a label. 
+        Use the weight of the classifier to predict a label.
         Input: 2D array of size (num_instances, num_features).
-        Output: 2D array of class predictions (num_instances, num_classes). 
+        Output: 2D array of class predictions (num_instances, num_classes).
         """
         y_pred = np.zeros(X.shape[0])
         scores = X.dot(self.W)
@@ -38,7 +38,7 @@ class LogisticRegression():
         return accuracy
 
     def train(self, X, y, learning_rate=1e-3, reg=0, num_iters=100, batch_size=200, verbose=False):
-        
+
         num_instances, num_features = X.shape
         num_classesnum_classes = np.max(y) + 1
 
@@ -67,8 +67,3 @@ class LogisticRegression():
 
     def loss(self, X_batch, y_batch, reg=0):
         return softmax_loss_vectorized(self.W, X_batch, y_batch, reg)
-
-
-
-
-

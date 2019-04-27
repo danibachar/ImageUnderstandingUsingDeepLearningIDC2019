@@ -17,24 +17,24 @@ class LinearClassifier(object):
         This function has no return value
 
         """
-        pass        
+        pass
 
     def predict(self, X):
 
         """
-        Use the weight of the classifier to predict a label. 
+        Use the weight of the classifier to predict a label.
         *** Subclasses will override this. ***
 
         Input: 2D array of size (num_instances, num_features).
-        Output: 1D array of class predictions (num_instances, 1). 
+        Output: 1D array of class predictions (num_instances, 1).
         """
         pass
 
     def calc_accuracy(self, X, y):
 
         """
-        Calculate the accuracy on a dataset as the percentage of instances 
-        that are classified correctly. 
+        Calculate the accuracy on a dataset as the percentage of instances
+        that are classified correctly.
 
         Inputs:
         - W: array of weights
@@ -108,7 +108,7 @@ class LinearClassifier(object):
 
     def loss(self, X, y):
         """
-        Compute the loss function and its derivative. 
+        Compute the loss function and its derivative.
         Subclasses will override this.
         Inputs:
         - X_batch: A numpy array of shape (N, D) containing a minibatch of N
@@ -232,9 +232,9 @@ class L2Regression(LinearClassifier):
     ### BONOUS QUESTION
     def l2_loss_vectorized(self, W, X, y, reg):
         """
-        Vectorized version of perceptron_loss_naive. instead of loops, should use 
+        Vectorized version of perceptron_loss_naive. instead of loops, should use
         numpy vectorization.
-  
+
         Inputs and outputs are the same as perceptron_loss_naive.
         """
         loss = 0.0
@@ -249,38 +249,13 @@ class L2Regression(LinearClassifier):
 
 
         scores = X.dot(W) - y
-        # print('y.shape = {}'.format(y.shape))
-        # print('W.shape = {}'.format(W.shape))
-        # print('X.shape = {}'.format(X.shape))
-        # print('scores.shape = {}'.format(scores.shape))
 
         loss = np.mean(0.5 * (scores**2))
-        # loss += 1 / 2 * reg * np.sum(W * W)
-        print('loss = {}'.format(loss))
+
         grad = np.empty_like(W)
         grad = X.T.dot(scores)
         dW = grad
         dW /= num_train
-        # dW += reg * W
-        print('grad.shape = {}'.format(dW.shape))
-        # correct_class_score = scores[list(range(num_train)), f_y]
-        # margins = np.maximum(0, scores - correct_class_score[:, np.newaxis] + 1)
-        # margins[np.arange(num_train), y] = 0
-        # loss = np.sum(margins)
-        # loss += 1 / 2 * reg * np.sum(W * W)
-        #
-        # # don't forget to take the mean
-        # loss /= num_train
-        #
-        # mask = np.zeros(margins.shape)
-        # mask[margins > 0] = 1
-        # np_sup_zero = np.sum(mask, axis=1)
-        # mask[np.arange(num_train), y] = -np_sup_zero
-        # dW = X.T.dot(mask)
-        #
-        # dW /= num_train
-        # dW += reg * W
-
         #############################################################################
         #                             END OF YOUR CODE                              #
         #############################################################################
@@ -289,8 +264,3 @@ class L2Regression(LinearClassifier):
 
     def loss(self, X_batch, y_batch):
         return self.l2_loss_vectorized(self.W, X_batch, y_batch, 5e-4)
-
-
-
-
-
