@@ -14,9 +14,6 @@ This is a repository that follow an IDC course H.W in Deep Learning
 ## Convolutional Neural Networks for Visual Recognition
 [Stanford CS231n](http://cs231n.github.io/)
 
-## Course Criclulim
-[CS231n solutions](https://github.com/MahanFathi/CS231/blob/master/assignment1/cs231n/classifiers/linear_svm.py)
-
 ## Understanding Epochs/Batch Size/ Iterations
 [1](https://towardsdatascience.com/epoch-vs-iterations-vs-batch-size-4dfb9c7ce9c9)
 [2](https://machinelearningmastery.com/difference-between-a-batch-and-an-epoch/)
@@ -48,4 +45,3 @@ Will Produce:
 Calc:
 [[1*11+2*13, 1*12+2*14],[3*11+4*13, 3*12+4*14]]
 ```
-
