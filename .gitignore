@@ -113,3 +113,6 @@ venv.bak/
 *.zip
 *.tar
 *.gz
+
+# Logs
+logs/
